@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import Navigation from '@/components/Navigation'
+import SiteHeader from '@/components/layout/SiteHeader'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
@@ -76,7 +76,7 @@ export default function GalleryPage() {
 
   return (
     <>
-      <Navigation />
+      <SiteHeader />
       <main className="overflow-hidden">
         {/* Header */}
         <section className="pt-32 pb-12 bg-cream-50">

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import Navigation from '@/components/Navigation'
+import SiteHeader from '@/components/layout/SiteHeader'
 import Footer from '@/components/Footer'
 import type { EnquiryRequest, EnquiryResponse } from '@/lib/enquiry'
 import {
@@ -91,7 +91,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <Navigation />
+      <SiteHeader />
       <main className="overflow-hidden">
         <section className="bg-base pb-12 pt-32">
           <div className="mx-auto max-w-6xl px-6">

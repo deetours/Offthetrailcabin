@@ -189,7 +189,7 @@ export default function SiteHeader() {
                 </a>
                 <div className="pt-4 text-xs text-[#F4EFE4]/70">
                   <p>Chamba, Himachal Pradesh</p>
-                  <p className="mt-1">Cafe â€¢ Cabins â€¢ Guided trails â€¢ Route help</p>
+                  <p className="mt-1">Cafe - Cabins - Guided trails - Route help</p>
                 </div>
               </div>
             </div>

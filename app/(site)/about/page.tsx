@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import Navigation from '@/components/Navigation'
+import SiteHeader from '@/components/layout/SiteHeader'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
@@ -24,13 +24,13 @@ const team: TeamMember[] = [
   {
     name: 'Elena Romero',
     role: 'Head Chef',
-    bio: 'Raised in the mountain region, Elena apprenticed with her grandmother and local mountain communities. She views cooking as a language—every meal tells the story of the land.',
+    bio: 'Raised in the mountain region, Elena apprenticed with her grandmother and local mountain communities. She views cooking as a language - every meal tells the story of the land.',
     expertise: ['Alpine cuisine', 'Seasonal cooking', 'Local sourcing', 'Nutritional science at altitude'],
   },
   {
     name: 'David Chen',
     role: 'Operations Director',
-    bio: 'With two decades in adventure tourism, David ensures that every operation—from logistics to safety—runs seamlessly so guests can focus on their experience.',
+    bio: 'With two decades in adventure tourism, David ensures that every operation - from logistics to safety - runs seamlessly so guests can focus on their experience.',
     expertise: ['Logistics coordination', 'Safety protocols', 'Environmental stewardship', 'Emergency response'],
   },
   {
@@ -44,7 +44,7 @@ const team: TeamMember[] = [
 export default function AboutPage() {
   return (
     <>
-      <Navigation />
+      <SiteHeader />
       <main className="overflow-hidden">
         {/* Hero */}
         <section className="pt-32 pb-20 bg-cream-50">
@@ -70,17 +70,17 @@ export default function AboutPage() {
                   Our founder Marcus grew up in foothills and summits. He spent decades as a professional mountain guide, leading expeditions and learning not just the landscape, but the psychology of altitude and the transformation that happens when people encounter wilderness.
                 </p>
                 <p className="font-sans text-lg text-stone-600 leading-relaxed">
-                  But something was missing. Guide work took him up mountains and down again. It didn't allow for the slower unfurling of connection—between guest and guide, guest and landscape, guest and self.
+                  But something was missing. Guide work took him up mountains and down again. It didn't allow for the slower unfurling of connection - between guest and guide, guest and landscape, guest and self.
                 </p>
               </div>
 
               <div>
                 <h3 className="font-serif text-2xl text-pine-900 mb-6">The Vision</h3>
                 <p className="font-sans text-lg text-stone-600 leading-relaxed mb-4">
-                  What if there was a place where people could stay longer? What if experts from different disciplines—guides, chefs, facilitators—worked together to create an environment where mountain transformation could unfold naturally?
+                  What if there was a place where people could stay longer? What if experts from different disciplines - guides, chefs, facilitators - worked together to create an environment where mountain transformation could unfold naturally?
                 </p>
                 <p className="font-sans text-lg text-stone-600 leading-relaxed">
-                  That question became Off the Trail. A basecamp. Not a resort. Not a hostel. A place with intention, expertise, and warmth—but also with respect for the mountain's wildness.
+                  That question became Off the Trail. A basecamp. Not a resort. Not a hostel. A place with intention, expertise, and warmth - but also with respect for the mountain's wildness.
                 </p>
               </div>
             </div>
@@ -142,7 +142,7 @@ export default function AboutPage() {
               <div className="bg-white rounded-2xl p-8 border border-stone-200">
                 <h3 className="font-serif text-2xl text-pine-900 mb-3">Authenticity</h3>
                 <p className="font-sans text-stone-600">
-                  We don't simulate. We live it. Every experience is genuine, unfiltered, and rooted in real mountain life. Authenticity can't be manufactured—it can only be honored.
+                  We don't simulate. We live it. Every experience is genuine, unfiltered, and rooted in real mountain life. Authenticity can't be manufactured - it can only be honored.
                 </p>
               </div>
 
@@ -163,7 +163,7 @@ export default function AboutPage() {
               <div className="bg-white rounded-2xl p-8 border border-stone-200">
                 <h3 className="font-serif text-2xl text-pine-900 mb-3">Transformation</h3>
                 <p className="font-sans text-stone-600">
-                  We create spaces where transformation is possible. Not forced—possible. The mountain does the work. We simply create the conditions.
+                  We create spaces where transformation is possible. Not forced - possible. The mountain does the work. We simply create the conditions.
                 </p>
               </div>
             </div>
@@ -210,7 +210,7 @@ export default function AboutPage() {
             <h2 className="font-serif text-4xl text-pine-900 mb-8">Our Philosophy</h2>
             <div className="bg-white rounded-2xl p-12 border border-stone-200">
               <p className="font-sans text-xl text-stone-700 leading-relaxed">
-                The mountain has been teaching humans for millennia. Altitude teaches humility. Distance teaches patience. Beauty teaches presence. Our role isn't to teach—it's to create conditions where the mountain can teach you. We're stewards, not proprietors. Guides, not heroes. And we're deeply grateful for the opportunity to help others discover what the mountain already knows.
+                The mountain has been teaching humans for millennia. Altitude teaches humility. Distance teaches patience. Beauty teaches presence. Our role isn't to teach - it's to create conditions where the mountain can teach you. We're stewards, not proprietors. Guides, not heroes. And we're deeply grateful for the opportunity to help others discover what the mountain already knows.
               </p>
             </div>
           </div>
