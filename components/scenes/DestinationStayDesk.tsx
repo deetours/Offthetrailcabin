@@ -96,7 +96,7 @@ export default function DestinationStayDesk({ selectedDestination }: Destination
                         onClick={() => trackConversion('stay_enquiry', { stayId: stay.id, destination: activeDest.id })}
                         variant="booking"
                         showArrow
-                        className="flex-1 w-full"
+                        className="h-[54px] w-full flex-1 rounded-[18px] border border-[#133429] bg-[linear-gradient(135deg,#0D2C22_0%,#16503A_100%)] text-[#F8F3E9] shadow-[0_12px_26px_rgba(10,28,22,0.18)] hover:border-[#1E6248] hover:bg-[linear-gradient(135deg,#0F3328_0%,#1C5D44_100%)]"
                       >
                         {stay.cta}
                       </LinkButton>
@@ -109,7 +109,7 @@ export default function DestinationStayDesk({ selectedDestination }: Destination
               {(!activeDest.stays || activeDest.stays.length < 2) && (
                 <div className="flex flex-col bg-primary rounded-[24px] p-8 md:p-12 text-surface justify-center relative overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_0%,rgba(201,120,45,0.15),transparent_60%)]" />
-                  <h3 className="font-serif text-[32px] mb-4 relative z-10">Route & Context</h3>
+                  <h3 className="relative z-10 mb-4 font-serif text-[32px] text-[#F4EFE4]">Route & Context</h3>
                   <ul className="space-y-4 relative z-10 mb-8">
                     {activeDest.routeNotes.map((note) => (
                       <li key={note} className="flex items-start gap-3 text-[16px] text-base/80">
