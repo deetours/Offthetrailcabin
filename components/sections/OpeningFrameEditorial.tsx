@@ -91,7 +91,7 @@ export default function OpeningFrameEditorial() {
         <div className="mt-12 grid items-center gap-[clamp(48px,6vw,96px)] lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.28fr)]">
           <div className="max-w-[560px]">
             <div className="hero-label mb-7 flex items-center gap-3">
-              <p className="text-[13px] font-semibold uppercase tracking-[0.28em] text-[#C9782D]">CHAMBA BASECAMP</p>
+              <p className="text-[13px] font-semibold uppercase tracking-[0.28em] text-[#C9782D]">OFF THE TRAIL</p>
               <svg width="24" height="10" viewBox="0 0 24 10" fill="none" aria-hidden="true">
                 <path
                   d="M1 9L6 3.8L8.8 6.9L13 1.8L16.2 5.2L19 2.9L23 7"
@@ -104,13 +104,12 @@ export default function OpeningFrameEditorial() {
             </div>
 
             <h1 className="hero-title mb-7 font-serif text-[clamp(48px,14vw,68px)] leading-[0.92] tracking-[-0.045em] text-[#17251F] md:text-[clamp(68px,6.4vw,108px)] md:leading-[0.88] md:tracking-[-0.055em]">
-              <span className="block">Eat well.</span>
-              <span className="block">Sleep warm.</span>
-              <span className="block italic lg:whitespace-nowrap">Head off trail.</span>
+              <span className="block">Choose your way</span>
+              <span className="block italic lg:whitespace-nowrap">into the hills.</span>
             </h1>
 
             <p className="hero-sub mb-9 max-w-[540px] text-[18px] leading-[1.65] tracking-[-0.015em] text-[#4F5852]">
-              A mountain cafe, quiet cabin stay, and guided local adventure basecamp for travelers who want Chamba without the confusion.
+              Pick Jibhi or Dalhousie, then plan your stay, meals, and local route support with Off the Trail.
             </p>
 
             <div className="hero-cta mb-9 flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -139,7 +138,7 @@ export default function OpeningFrameEditorial() {
                 {/* Replace with cohesive warm set: interior cabin+mtns, cafe table, quiet trail */}
                 <Image
                   src="/images/offtrail/cabin-window.jpg"
-                  alt="Warm cabin interior looking out toward Chamba mountains"
+                  alt="Warm cabin interior looking out toward the mountains"
                   fill
                   className="object-cover object-center lg:object-[52%_50%]"
                   sizes="(max-width: 1024px) 100vw, 55vw"
@@ -150,7 +149,7 @@ export default function OpeningFrameEditorial() {
 
                 <div className="hero-package absolute bottom-6 right-6 hidden w-[min(380px,calc(100%-48px))] rounded-[22px] border border-[rgba(23,37,31,0.10)] bg-[rgba(255,252,246,0.94)] p-6 shadow-[0_24px_80px_rgba(23,37,31,0.12)] backdrop-blur-[18px] lg:block">
                   <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#6D716B]">FEATURED PACKAGE</p>
-                  <h3 className="mt-4 font-serif text-[30px] leading-[1.05] tracking-[-0.025em] text-[#17251F]">48-hour Chamba escape</h3>
+                  <h3 className="mt-4 font-serif text-[30px] leading-[1.05] tracking-[-0.025em] text-[#17251F]">48-hour Hill escape</h3>
                   <p className="mt-3 text-[15px] text-[#4F5852]">Stay + food + local trail guidance</p>
                   <Link
                     href="/packages"
@@ -183,7 +182,7 @@ export default function OpeningFrameEditorial() {
               <div className="hero-image relative hidden overflow-hidden rounded-[24px] lg:col-start-2 lg:row-start-2 lg:block">
                 <Image
                   src="/images/offtrail/trail-path.jpg"
-                  alt="Mountain trail near Chamba"
+                  alt="Mountain trail near basecamp"
                   fill
                   className="object-cover object-[52%_58%]"
                   sizes="(max-width: 1024px) 0vw, 20vw"
@@ -193,7 +192,7 @@ export default function OpeningFrameEditorial() {
 
             <div className="hero-package mt-5 rounded-[22px] border border-[rgba(23,37,31,0.10)] bg-[rgba(255,252,246,0.94)] p-6 shadow-[0_24px_80px_rgba(23,37,31,0.12)] backdrop-blur-[18px] lg:hidden">
               <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#6D716B]">FEATURED PACKAGE</p>
-              <h3 className="mt-4 font-serif text-[30px] leading-[1.05] tracking-[-0.025em] text-[#17251F]">48-hour Chamba escape</h3>
+              <h3 className="mt-4 font-serif text-[30px] leading-[1.05] tracking-[-0.025em] text-[#17251F]">48-hour Hill escape</h3>
               <p className="mt-3 text-[15px] text-[#4F5852]">Stay + food + local trail guidance</p>
               <Link
                 href="/packages"
@@ -218,7 +217,7 @@ export default function OpeningFrameEditorial() {
               <div className="hero-image relative h-48 overflow-hidden rounded-[20px]">
                 <Image
                   src="/images/offtrail/trail-path.jpg"
-                  alt="Mountain trail near Chamba"
+                  alt="Mountain trail near basecamp"
                   fill
                   className="object-cover object-[52%_58%]"
                   sizes="(max-width: 1024px) 50vw, 0vw"

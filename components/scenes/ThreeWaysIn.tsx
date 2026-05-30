@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import Link from 'next/link'
 import Image from 'next/image'
@@ -30,7 +30,7 @@ const cards: DoorCard[] = [
     cta: 'Explore cabins',
     href: '/stays',
     image: '/images/cabins.png',
-    alt: 'Warm cabin at Off the Trail in Chamba',
+    alt: 'Warm cabin at Off the Trail',
     desktopClass: 'lg:col-start-1 lg:row-[1/span_2] md:col-span-2 lg:col-span-1',
     minHeightClass: 'min-h-[460px] md:min-h-[520px] lg:min-h-[640px]',
     titleClass: 'text-[clamp(52px,4.2vw,76px)]',
@@ -52,11 +52,11 @@ const cards: DoorCard[] = [
   {
     label: 'EXPLORE',
     title: 'The Trails',
-    description: 'Guided local days through Chamba\'s quieter routes.',
+    description: 'Guided local days through quieter hill routes.',
     cta: 'Explore trails',
     href: '/adventures',
     image: '/images/trails.png',
-    alt: 'Misty forest trail near Chamba',
+    alt: 'Misty forest trail in the hills',
     desktopClass: 'lg:col-start-2 lg:row-start-2',
     minHeightClass: 'min-h-[340px] md:min-h-[360px] lg:min-h-[308px]',
     titleClass: 'text-[clamp(34px,2.8vw,48px)]',
@@ -78,7 +78,7 @@ export default function ThreeWaysIn() {
           <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.22em] text-[#C9782D]">THREE WAYS IN</p>
           <h2 className="font-serif text-[clamp(48px,5vw,76px)] leading-[0.95] tracking-[-0.045em] text-[#17251F]">Choose your way in.</h2>
           <p className="mx-auto mt-[18px] max-w-[620px] text-[17px] leading-[1.6] text-[#6D716B]">
-            Start at the table, stay by the hills, or step into Chamba&apos;s quieter trails.
+            Start at the table, stay by the hills, or step into the hills&apos; quieter trails.
           </p>
         </motion.div>
 

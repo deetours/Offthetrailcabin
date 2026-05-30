@@ -36,18 +36,17 @@ export default function OpeningFrame() {
       <div className="relative z-10 mx-auto w-full max-w-5xl px-6 text-center md:px-12">
         <div className="gsap-label mb-8">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent md:text-sm">
-            Chamba, Himachal Pradesh
+            Jibhi · Dalhousie
           </p>
         </div>
 
         <h1 className="gsap-title mb-8 text-5xl font-serif leading-[1.1] text-surface md:text-8xl">
-          <span className="block">Eat well.</span>
-          <span className="block">Sleep warm.</span>
-          <span className="block italic">Head off trail.</span>
+          <span className="block">Choose your way</span>
+          <span className="block italic">into the hills.</span>
         </h1>
 
         <p className="gsap-sub mx-auto mb-12 max-w-2xl text-base font-light leading-relaxed text-surface/90 md:text-xl">
-          A mountain cafe, cabin stay, and local adventure basecamp built for travelers who want the hills without the confusion.
+          Pick Jibhi or Dalhousie, then plan your stay, meals, and local route support with Off the Trail.
         </p>
 
         <div className="gsap-cta flex flex-col items-center justify-center gap-6 sm:flex-row">

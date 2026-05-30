@@ -6,6 +6,9 @@ export type ConversionEvent =
   | 'enquiry_error'
   | 'whatsapp_click'
   | 'confirmation_view'
+  | 'quick_whatsapp_enquiry'
+  | 'submit_enquiry_form'
+  | string // allow dynamic template strings
 
 export function trackConversion(event: ConversionEvent, meta?: Record<string, string>) {
   if (typeof window === 'undefined') return

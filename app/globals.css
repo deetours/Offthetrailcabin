@@ -4,6 +4,8 @@
 
 @layer base {
   :root {
+    --font-geist-sans: "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    --font-newsreader: "Iowan Old Style", "Baskerville", Georgia, serif;
     --font-dm-sans: "DM Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     --font-instrument-serif: "Instrument Serif", "Iowan Old Style", "Baskerville", Georgia, serif;
     --primary: 23, 37, 31;      /* #17251F */

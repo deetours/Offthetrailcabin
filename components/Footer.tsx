@@ -1,16 +1,18 @@
-﻿'use client'
+'use client'
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
-import { DEFAULT_WHATSAPP_NUMBER, createWhatsAppLink } from '@/lib/enquiry'
+import { DEFAULT_WHATSAPP_NUMBER, createWhatsAppLink, buildGlobalWhatsAppMessage } from '@/lib/enquiry'
 import { trackConversion } from '@/lib/analytics'
+import { useDestination } from '@/lib/DestinationContext'
+import { LinkButton } from '@/components/ui/button'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const { selectedDestination } = useDestination()
   const whatsappHref = createWhatsAppLink(
     DEFAULT_WHATSAPP_NUMBER,
-    'Hi Off the Trail team, I would like help planning my trip.',
+    buildGlobalWhatsAppMessage(selectedDestination),
   )
 
   const experienceLinks = [
@@ -30,7 +32,7 @@ export default function Footer() {
   const routeNotes = [
     'Best arrival: before 5 PM for clear mountain roads and easy check-in.',
     'Parking: available on-site with host-guided final approach.',
-    'Network: strongest near Chamba town, patchy on upper stretches.',
+    'Network: strongest in main town areas, patchy on upper stretches.',
     'Weather: ask before you come.',
   ]
 
@@ -43,18 +45,19 @@ export default function Footer() {
               Off the Trail
             </Link>
             <p className="mt-6 max-w-[420px] text-[17px] leading-[1.65] text-[rgba(244,239,228,0.66)]">
-              A Chamba basecamp for warm food, quiet cabins, and guided days off the trail.
+              Warm stays in Jibhi and Dalhousie with warm food, quiet cabins, and guided days off the trail.
             </p>
-            <a
+            <LinkButton
               href={whatsappHref}
               target="_blank"
               rel="noreferrer"
               onClick={() => trackConversion('whatsapp_click', { source: 'footer' })}
-              className="group mt-8 inline-flex h-12 items-center gap-2 rounded-xl border border-[rgba(244,239,228,0.18)] px-[22px] text-[14px] font-semibold text-[#F4EFE4] transition-colors hover:border-[#C9782D]"
+              variant="secondary"
+              showArrow
+              className="mt-8 border-[#F4EFE4]/30 bg-white/[0.06] px-6 text-[#F4EFE4] shadow-[0_14px_34px_rgba(0,0,0,0.22)] hover:border-[#E5D5B5]/70 hover:bg-white/[0.14]"
             >
-              <span>Ask on WhatsApp</span>
-              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-            </a>
+              Ask on WhatsApp
+            </LinkButton>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.08 }}>
@@ -107,7 +110,7 @@ export default function Footer() {
 
         <div className="mt-10 flex flex-col justify-between gap-4 border-t border-[rgba(244,239,228,0.08)] pt-6 text-[13px] text-[rgba(244,239,228,0.46)] md:flex-row">
           <p>© {currentYear} Off the Trail Basecamp. Built with intention.</p>
-          <p>Chamba, Himachal Pradesh · 32.5534° N, 76.1258° E</p>
+          <p>Jibhi · Dalhousie · Himachal Pradesh</p>
         </div>
       </div>
     </footer>

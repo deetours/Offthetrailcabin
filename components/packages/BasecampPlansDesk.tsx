@@ -1,7 +1,14 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
+import { motion, AnimatePresence } from 'framer-motion'
+import { LinkButton } from '@/components/ui/button'
+
+type PlanSpec = {
+  label: string
+  value: string
+}
 
 type Plan = {
   id: string
@@ -11,158 +18,196 @@ type Plan = {
   bestFor: string
   price: string
   image: string
-  shortLine: string
-  includes: string[]
-  itinerary: string[]
+  summary: string
+  specs: PlanSpec[]
 }
 
-const WHATSAPP_NUMBER = '919999999999' // TODO: Replace with real Off the Trail WhatsApp number.
+const WHATSAPP_NUMBER = '919999999999'
 
 const plans: Plan[] = [
   {
     id: 'reset',
     number: '01',
     title: '24-Hour Reset',
-    duration: '1 day',
-    bestFor: 'Quick getaway',
-    price: 'Rs 4,500 for 2 guests',
+    duration: '1 day / 1 night',
+    bestFor: 'Quick Getaway',
+    price: 'INR 4,500 / 2 guests',
     image: '/images/reset.png',
-    shortLine: 'A quick mountain pause with food, rest, and a short guided walk.',
-    includes: ['1 night cabin stay', 'Breakfast at the cafe', 'Short guided walk', 'Route help'],
-    itinerary: ['Arrive by afternoon', 'Cafe meal', 'Short meadow walk', 'Cabin rest'],
+    summary: 'A deliberate mountain pause designed to clear the mind. Includes simple warm food and a guided introductory forest walk.',
+    specs: [
+      { label: 'Meals Included', value: 'Breakfast service' },
+      { label: 'Guided Trail', value: 'Short introductory walk' },
+    ],
   },
   {
     id: 'escape',
     number: '02',
-    title: '48-Hour Chamba Escape',
-    duration: '2 days',
-    bestFor: 'Relaxed immersion',
-    price: 'Rs 8,500 for 2 guests',
+    title: '48-Hour Hill Escape',
+    duration: '2 days / 2 nights',
+    bestFor: 'Relaxed Immersion',
+    price: 'INR 8,500 / 2 guests',
     image: '/images/escape.png',
-    shortLine: 'The complete basecamp experience with firelit dinner, forest trail, and deep cabin rest.',
-    includes: ['2 nights quiet cabin stay', 'Breakfast', '1 dinner', 'Local forest trail', 'Route help', 'Optional bonfire tea setup'],
-    itinerary: ['Arrive and settle into the cabin', 'Cafe dinner and firelit evening', 'Breakfast + guided local trail', 'Slow return'],
+    summary: 'Our signature mountain rhythm. Dive deep into the silence of the valley with slow breakfasts, a dedicated forest trail, and firelit evenings.',
+    specs: [
+      { label: 'Meals Included', value: '2 breakfasts + 1 dinner' },
+      { label: 'Guided Trail', value: 'Guided pine forest trail' },
+    ],
   },
   {
     id: 'trail-weekend',
     number: '03',
     title: 'Trail Weekend',
-    duration: '2 days',
-    bestFor: 'Active explorers',
-    price: 'Rs 9,800 for 2 guests',
+    duration: '2 days / 2 nights',
+    bestFor: 'Active Explorers',
+    price: 'INR 9,800 / 2 guests',
     image: '/images/trail_weekend.png',
-    shortLine: 'Adventure-first days with local experts and a warm meal waiting at basecamp.',
-    includes: ['2 nights stay', 'Early start support', 'Packed meal or breakfast', 'Guided trail route', 'Route briefing', 'Warm dinner'],
-    itinerary: ['Arrive at basecamp', 'Briefing and warm meal', 'Guided trail day', 'Return to cabin'],
+    summary: 'An adventure-focused itinerary for active hikers. Led by local guides, backed by early-morning trail food and restorative dinners.',
+    specs: [
+      { label: 'Meals Included', value: 'Pre-trail breakfast + dinner' },
+      { label: 'Guided Trail', value: 'Full moderate difficulty route' },
+    ],
   },
 ]
 
 export default function BasecampPlansDesk() {
-  const [selectedPlanId, setSelectedPlanId] = useState('escape')
-  const [dates, setDates] = useState('')
-  const [guests, setGuests] = useState(2)
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [notes, setNotes] = useState('')
-
-  const selectedPlan = useMemo(() => plans.find((p) => p.id === selectedPlanId) ?? plans[1], [selectedPlanId])
-
-  const whatsappHref = useMemo(() => {
-    const text = [
-      'Hi Off the Trail, I want to enquire about a package.',
-      '',
-      `Package: ${selectedPlan.title}`,
-      `Dates: ${dates || 'Not shared yet'}`,
-      `Guests: ${guests}`,
-      `Name: ${name || 'Not shared yet'}`,
-      `Phone: ${phone || 'Not shared yet'}`,
-      `Notes: ${notes || 'None'}`,
-      '',
-      'Please confirm availability, price, food options, and trail suitability.',
-    ].join('\n')
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`
-  }, [selectedPlan, dates, guests, name, phone, notes])
+  const [activePlanId, setActivePlanId] = useState<string>('escape')
+  const [guests, setGuests] = useState<number>(2)
+  const [dates, setDates] = useState<string>('')
 
   return (
-    <section id="plans" className="bg-[#FFFCF6] py-20">
-      <div className="mx-auto max-w-7xl px-6">
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#6D716B]">Featured basecamp planner</p>
-        <h2 className="mt-3 text-4xl font-serif text-[#17251F] md:text-5xl">Pick a format, then confirm on WhatsApp</h2>
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1.5fr_1fr]">
-          <article className="relative overflow-hidden rounded-[24px] border border-[rgba(23,37,31,0.12)] min-h-[460px]">
-            <Image src={selectedPlan.image} alt={selectedPlan.title} fill className="object-cover" sizes="(max-width: 1024px) 100vw, 60vw" />
-            <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(15,30,25,0.82),rgba(15,30,25,0.2))]" />
-            <div className="absolute inset-x-0 bottom-0 p-6 text-[#FFFCF6]">
-              <p className="text-xs uppercase tracking-[0.12em]">Most chosen format</p>
-              <h3 className="mt-2 text-4xl font-serif">{selectedPlan.title}</h3>
-              <p className="mt-2 text-sm">{selectedPlan.duration} · {selectedPlan.bestFor}</p>
-              <p className="mt-3 text-sm max-w-xl">{selectedPlan.shortLine}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {selectedPlan.includes.map((item) => (
-                  <span key={item} className="rounded-full border border-[rgba(255,252,246,0.4)] px-3 py-1 text-xs">{item}</span>
-                ))}
-              </div>
-              <p className="mt-4 text-lg font-semibold">{selectedPlan.price}</p>
-            </div>
-          </article>
+    <section id="package-gallery" className="relative bg-white py-32 md:py-48">
+      <div className="mx-auto max-w-[1600px] px-[clamp(24px,5vw,72px)]">
 
-          <aside className="space-y-4">
-            <div className="rounded-[24px] border border-[rgba(23,37,31,0.12)] bg-[#F4EFE4] p-4">
-              {plans.map((plan) => {
-                const active = selectedPlanId === plan.id
-                return (
-                  <button
-                    key={plan.id}
-                    type="button"
-                    aria-pressed={active}
-                    onClick={() => setSelectedPlanId(plan.id)}
-                    className={`mb-2 w-full rounded-2xl border px-4 py-3 text-left transition ${
-                      active ? 'border-[#17251F] bg-[#17251F] text-[#FFFCF6]' : 'border-[rgba(23,37,31,0.12)] bg-[#FFFCF6] text-[#17251F]'
-                    }`}
-                  >
-                    <p className="text-xs">{plan.number}</p>
-                    <p className="text-base font-semibold">{plan.title}</p>
-                    <p className="text-xs opacity-80">{plan.duration} · {plan.price}</p>
-                  </button>
-                )
-              })}
-            </div>
-
-            <div className="rounded-[24px] border border-[rgba(23,37,31,0.12)] bg-[#FFFCF6] p-5">
-              <p className="text-base font-semibold text-[#17251F]">Your plan includes</p>
-              <ul className="mt-3 space-y-1 text-sm text-[#6D716B]">
-                {selectedPlan.itinerary.map((step) => <li key={step}>- {step}</li>)}
-              </ul>
-              <p className="mt-4 text-xs text-[#6D716B]">No payment now. We confirm availability and trail suitability on WhatsApp first.</p>
-            </div>
-          </aside>
+        {/* Section Header */}
+        <div className="mb-20 grid gap-8 lg:grid-cols-2 lg:items-end max-w-[1440px] mx-auto">
+          <div>
+            <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-[#8C7A6B]">The Package Gallery</p>
+            <h2 className="mt-4 text-[clamp(44px,6vw,72px)] font-serif leading-[1.05] tracking-tight text-primary">
+              Choose your basecamp blueprint.
+            </h2>
+          </div>
+          <p className="max-w-[520px] text-[18px] leading-relaxed text-primary/70 lg:justify-self-end">
+            Each format is custom-shaped for a unique mountain cadence. Select a plan below to view details and start your request.
+          </p>
         </div>
 
-        <div id="plan-enquiry" className="mt-8 rounded-[24px] border border-[rgba(23,37,31,0.12)] bg-[#F4EFE4] p-6">
-          <h3 className="text-3xl font-serif text-[#17251F]">Plan this package</h3>
-          <div className="mt-4 grid gap-4 md:grid-cols-2">
-            <label className="text-sm text-[#17251F]">Selected package
-              <input readOnly value={selectedPlan.title} className="mt-1 w-full rounded-xl border border-[rgba(23,37,31,0.14)] bg-[#FFFCF6] px-3 py-2 text-sm" />
-            </label>
-            <label className="text-sm text-[#17251F]">Dates
-              <input value={dates} onChange={(e) => setDates(e.target.value)} placeholder="e.g. 24-26 May" className="mt-1 w-full rounded-xl border border-[rgba(23,37,31,0.14)] bg-[#FFFCF6] px-3 py-2 text-sm" />
-            </label>
-            <label className="text-sm text-[#17251F]">Guests
-              <input type="number" min={1} value={guests} onChange={(e) => setGuests(Number(e.target.value) || 1)} className="mt-1 w-full rounded-xl border border-[rgba(23,37,31,0.14)] bg-[#FFFCF6] px-3 py-2 text-sm" />
-            </label>
-            <label className="text-sm text-[#17251F]">Name
-              <input value={name} onChange={(e) => setName(e.target.value)} className="mt-1 w-full rounded-xl border border-[rgba(23,37,31,0.14)] bg-[#FFFCF6] px-3 py-2 text-sm" />
-            </label>
-            <label className="text-sm text-[#17251F]">WhatsApp number
-              <input value={phone} onChange={(e) => setPhone(e.target.value)} className="mt-1 w-full rounded-xl border border-[rgba(23,37,31,0.14)] bg-[#FFFCF6] px-3 py-2 text-sm" />
-            </label>
-            <label className="text-sm text-[#17251F] md:col-span-2">Notes
-              <textarea value={notes} onChange={(e) => setNotes(e.target.value)} className="mt-1 min-h-[84px] w-full rounded-xl border border-[rgba(23,37,31,0.14)] bg-[#FFFCF6] px-3 py-2 text-sm" />
-            </label>
-          </div>
-          <a href={whatsappHref} target="_blank" rel="noreferrer" className="mt-5 inline-flex rounded-xl bg-[#17251F] px-5 py-3 text-sm font-semibold text-[#FFFCF6]">
-            Send package enquiry on WhatsApp
-          </a>
+        {/* Interactive Accordion Layout */}
+        <div className="flex h-[85vh] min-h-[600px] max-h-[900px] w-full flex-col gap-4 lg:flex-row lg:gap-6">
+          {plans.map((plan) => {
+            const isActive = activePlanId === plan.id
+
+            // Generate WhatsApp Link
+            const message = [
+              'Hi Off the Trail team,',
+              '',
+              `I'd like to book the ${plan.title} for ${guests} guest(s) around ${dates || 'my preferred dates'}.`,
+              '',
+              'Please confirm stay availability, custom options, and cabin choices.',
+            ].join('%0A')
+            const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`
+
+            return (
+              <motion.article
+                key={plan.id}
+                layout
+                onClick={() => setActivePlanId(plan.id)}
+                className={`group relative flex cursor-pointer overflow-hidden rounded-[32px] transition-all duration-700 ease-[0.32,0.72,0,1] ${
+                  isActive ? 'lg:flex-[2.5]' : 'lg:flex-[1]'
+                } ${isActive ? 'flex-[3]' : 'flex-[1]'}`}
+              >
+                {/* Background Image */}
+                <Image
+                  src={plan.image}
+                  alt={plan.title}
+                  fill
+                  className="object-cover transition-transform duration-[1.5s] ease-[0.22,1,0.36,1] group-hover:scale-105"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                />
+                
+                {/* Overlays */}
+                <div className={`absolute inset-0 transition-opacity duration-700 ${isActive ? 'bg-black/50 mix-blend-multiply' : 'bg-black/40'}`} />
+                <div className={`absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent transition-opacity duration-700 ${isActive ? 'opacity-100' : 'opacity-80'}`} />
+                
+                {/* Content */}
+                <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-12">
+                  <div className="flex items-center gap-4">
+                    <span className="font-serif text-[40px] leading-none text-[#E5D5B5] lg:text-[60px]">{plan.number}</span>
+                    <motion.div layout="position">
+                      <p className={`text-[10px] font-bold uppercase tracking-[0.2em] text-white/70 transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-0 lg:opacity-100'}`}>{plan.bestFor}</p>
+                      <h3 className="mt-1 font-serif text-[24px] leading-tight text-white lg:text-[32px]">{plan.title}</h3>
+                    </motion.div>
+                  </div>
+
+                  {/* Expanded Content Details */}
+                  <AnimatePresence>
+                    {isActive && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                        animate={{ opacity: 1, height: 'auto', marginTop: 32 }}
+                        exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                        transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <p className="max-w-[500px] text-[16px] leading-relaxed text-white/80">{plan.summary}</p>
+                        
+                        <div className="mt-8 grid max-w-[600px] gap-6 border-t border-white/20 pt-8 sm:grid-cols-2">
+                          <div>
+                            <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#E5D5B5]">Experience Rate</p>
+                            <p className="mt-2 font-serif text-[22px] text-white">{plan.price}</p>
+                          </div>
+                          <div>
+                            <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#E5D5B5]">Duration</p>
+                            <p className="mt-2 font-serif text-[22px] text-white">{plan.duration}</p>
+                          </div>
+                          {plan.specs.map(spec => (
+                            <div key={spec.label}>
+                              <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-white/50">{spec.label}</p>
+                              <p className="mt-1 text-[15px] font-medium text-white/90">{spec.value}</p>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Interactive Booking Strip */}
+                        <div className="mt-10 flex max-w-[600px] flex-col gap-4 sm:flex-row sm:items-center rounded-2xl bg-white/10 p-4 backdrop-blur-md border border-white/20">
+                          <div className="flex flex-1 items-center gap-3">
+                            <input
+                              type="number"
+                              min={1}
+                              value={guests}
+                              onChange={(e) => setGuests(Math.max(1, Number(e.target.value) || 1))}
+                              onClick={(e) => e.stopPropagation()}
+                              className="w-16 rounded-lg bg-black/20 px-3 py-2 text-center text-[15px] text-white outline-none focus:ring-1 focus:ring-[#E5D5B5]"
+                              aria-label="Guests"
+                            />
+                            <span className="text-[12px] uppercase tracking-[0.1em] text-white/60">Guests</span>
+                          </div>
+                          <div className="flex flex-[2] items-center gap-3">
+                            <input
+                              type="text"
+                              value={dates}
+                              onChange={(e) => setDates(e.target.value)}
+                              onClick={(e) => e.stopPropagation()}
+                              placeholder="Preferred dates"
+                              className="w-full rounded-lg bg-black/20 px-4 py-2 text-[15px] text-white outline-none focus:ring-1 focus:ring-[#E5D5B5] placeholder:text-white/30"
+                              aria-label="Dates"
+                            />
+                          </div>
+                          <LinkButton 
+                            href={whatsappHref} 
+                            target="_blank" 
+                            className="w-full justify-center bg-white text-primary hover:bg-[#E5D5B5] sm:w-auto" 
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            Request
+                          </LinkButton>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </motion.article>
+            )
+          })}
         </div>
       </div>
     </section>

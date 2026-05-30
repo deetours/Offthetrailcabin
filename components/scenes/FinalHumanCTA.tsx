@@ -1,9 +1,10 @@
-﻿'use client'
+'use client'
 
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import type { EnquiryRequest, EnquiryResponse } from '@/lib/enquiry'
+import { LinkButton } from '@/components/ui/button'
 import {
   DEFAULT_WHATSAPP_NUMBER,
   buildEnquiryWhatsAppMessage,
@@ -32,7 +33,11 @@ function FieldLabel({ htmlFor, children }: { htmlFor: string; children: string }
 const fieldClass =
   'h-16 w-full rounded-[18px] border border-[rgba(255,252,246,0.12)] bg-[rgba(255,252,246,0.06)] px-4 text-base text-[#FFFCF6] outline-none transition placeholder:text-[rgba(244,239,228,0.44)] focus:border-[rgba(201,120,45,0.65)] focus:shadow-[0_0_0_3px_rgba(201,120,45,0.12)]'
 
-export default function FinalHumanCTA() {
+interface FinalHumanCTAProps {
+  selectedDestination?: 'jibhi' | 'dalhousie'
+}
+
+export default function FinalHumanCTA({ selectedDestination = 'jibhi' }: FinalHumanCTAProps) {
   const [step, setStep] = useState<'form' | 'success'>('form')
   const [formData, setFormData] = useState<EnquiryRequest>(initialForm)
   const [errors, setErrors] = useState<Partial<Record<keyof EnquiryRequest, string>>>({})
@@ -43,16 +48,23 @@ export default function FinalHumanCTA() {
     () =>
       createWhatsAppLink(
         DEFAULT_WHATSAPP_NUMBER,
-        buildEnquiryWhatsAppMessage({
-          source: formData.source,
-          dates: formData.dates,
-          guests: formData.guests,
-          interest: formData.interest,
-          name: formData.name,
-          phone: formData.phone,
-        }),
+        [
+          `Hi Off the Trail, I want to plan a stay.`,
+          ``,
+          `Destination: ${selectedDestination === 'jibhi' ? 'Jibhi' : 'Dalhousie'}`,
+          `Stay/Property: `,
+          `Dates: ${formData.dates || ''}`,
+          `Guests: ${formData.guests || ''}`,
+          `Interest: ${formData.interest || ''}`,
+          `Package: `,
+          `Name: ${formData.name || ''}`,
+          `Phone: ${formData.phone || ''}`,
+          `Notes: ${formData.notes || ''}`,
+          ``,
+          `Please confirm availability, price, route details, and payment steps.`
+        ].join('\n')
       ),
-    [formData],
+    [formData, selectedDestination],
   )
 
   function setField<K extends keyof EnquiryRequest>(key: K, value: EnquiryRequest[K]) {
@@ -85,7 +97,10 @@ export default function FinalHumanCTA() {
       const res = await fetch('/api/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          notes: `Selected Destination: ${selectedDestination === 'jibhi' ? 'Jibhi' : 'Dalhousie'}\n\n${formData.notes}`
+        }),
       })
       if (!res.ok) throw new Error('Failed to submit enquiry')
       const data = (await res.json()) as EnquiryResponse
@@ -117,12 +132,12 @@ export default function FinalHumanCTA() {
           >
             <p className="mb-[18px] text-[12px] font-semibold uppercase tracking-[0.22em] text-[#C9782D]">FINAL STEP</p>
             <h2 className="font-serif text-[clamp(56px,6vw,96px)] leading-[0.9] tracking-[-0.05em] text-[#F4EFE4]">
-              Start your
+              Ready to plan
               <br />
-              basecamp plan.
+              your stay?
             </h2>
             <p className="mt-7 max-w-[540px] text-[18px] leading-[1.65] text-[rgba(244,239,228,0.72)]">
-              Tell us your dates, group size, and what you want from Chamba. We&apos;ll help you choose the right stay, meal, and trail plan.
+              Choose Jibhi or Dalhousie, share your dates and guests, and we’ll help you confirm the right stay.
             </p>
 
             <div className="mt-12 max-w-[560px]">
@@ -268,7 +283,7 @@ export default function FinalHumanCTA() {
                         disabled={submitting}
                         className="group inline-flex h-[58px] w-full items-center justify-center gap-[10px] rounded-[16px] bg-[#C9782D] px-7 text-[15px] font-bold text-[#FFFCF6] transition-colors hover:bg-[#D98A3A] disabled:opacity-60 md:w-auto"
                       >
-                        <span>{submitting ? 'Sending...' : 'Send my basecamp plan'}</span>
+                        <span>{submitting ? 'Sending...' : 'Send stay enquiry'}</span>
                         <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                       </motion.button>
                     </div>
@@ -315,16 +330,17 @@ export default function FinalHumanCTA() {
                     Ask on WhatsApp. We&apos;ll help you choose before you book.
                   </p>
                 </div>
-                <a
+                <LinkButton
                   href={whatsappHref}
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => trackConversion('whatsapp_click', { source: formData.source })}
-                  className="group inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-[rgba(244,239,228,0.18)] px-5 text-[14px] font-semibold text-[#F4EFE4] transition-colors hover:border-[#C9782D]"
+                  variant="secondary"
+                  showArrow
+                  className="w-full whitespace-nowrap border-[#F4EFE4]/30 bg-white/[0.06] px-6 text-[#F4EFE4] shadow-[0_14px_34px_rgba(0,0,0,0.22)] hover:border-[#E5D5B5]/70 hover:bg-white/[0.14] md:w-auto"
                 >
-                  <span>Ask on WhatsApp</span>
-                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                </a>
+                  Ask before booking
+                </LinkButton>
               </div>
             </div>
           </div>

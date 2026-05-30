@@ -1,6 +1,6 @@
 module.exports = {
   content: [
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
@@ -11,7 +11,7 @@ module.exports = {
         surface: '#FFFCF6', // Cabin Paper
         accent: {
           DEFAULT: '#C9782D', // Trail Ember
-          slate: '#4A6472',  // Chamba Slate Blue
+          slate: '#4A6472',  // Mountain Slate Blue
         },
         text: {
           DEFAULT: '#1D211F', // Soft Charcoal
@@ -20,8 +20,8 @@ module.exports = {
         border: '#D8D0C3',    // Aged Stone
       },
       fontFamily: {
-        sans: ['var(--font-dm-sans)'],
-        serif: ['var(--font-instrument-serif)'],
+        sans: ['var(--font-geist-sans)', 'sans-serif'],
+        serif: ['var(--font-newsreader)', 'serif'],
       },
       borderRadius: {
         sm: '12px',
@@ -35,4 +35,3 @@ module.exports = {
   },
   plugins: [],
 }
-

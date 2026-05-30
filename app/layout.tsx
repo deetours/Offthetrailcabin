@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import { DestinationProvider } from '@/lib/DestinationContext'
 import './globals.css'
 
 export const viewport: Viewport = {
@@ -10,13 +11,13 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Off the Trail | Mountain Basecamp',
-  description: 'Premium mountain basecamp experiences beyond the ordinary. Discover authentic alpine adventures.',
-  keywords: ['mountain', 'basecamp', 'hiking', 'adventure', 'alpine', 'nature'],
+  title: 'Off the Trail | Stays in Jibhi & Dalhousie',
+  description: 'Warm stays, local food, and route help in Jibhi and Dalhousie. Plan your mountain stay with Off the Trail.',
+  keywords: ['mountain', 'basecamp', 'hiking', 'adventure', 'alpine', 'nature', 'jibhi', 'dalhousie', 'himachal'],
   metadataBase: new URL('https://offthetrail.com'),
   openGraph: {
-    title: 'Off the Trail | Mountain Basecamp',
-    description: 'Premium mountain basecamp experiences beyond the ordinary.',
+    title: 'Off the Trail | Stays in Jibhi & Dalhousie',
+    description: 'Warm stays, local food, and route help in Jibhi and Dalhousie. Plan your mountain stay with Off the Trail.',
     url: 'https://offthetrail.com',
     siteName: 'Off the Trail',
     locale: 'en_US',
@@ -41,7 +42,9 @@ export default function RootLayout({
         <meta httpEquiv="x-ua-compatible" content="ie=edge" />
       </head>
       <body className="bg-cream-50 text-pine-900 font-sans">
-        {children}
+        <DestinationProvider>
+          {children}
+        </DestinationProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

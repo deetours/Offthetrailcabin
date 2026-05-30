@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useEffect, useMemo, useState } from 'react'
 import Image from 'next/image'
@@ -23,6 +23,11 @@ type TripPackage = {
   inclusions: string[]
   itinerary: { label: string; items: string[] }[]
   comfortNotes: string[]
+  destination: 'jibhi' | 'dalhousie' | 'both'
+}
+
+interface ChooseYourTripProps {
+  selectedDestination: 'jibhi' | 'dalhousie'
 }
 
 const moodFilters = [
@@ -47,20 +52,21 @@ const packages: TripPackage[] = [
     shortLine: 'A quick mountain pause with food, rest, and a short guided walk.',
     description: 'A quick mountain pause. Includes cabin stay, cafe breakfast, and a short guided meadow walk.',
     image: '/images/reset.png',
-    imageAlt: 'Short basecamp reset experience in Chamba',
-    inclusions: ['Cabin stay', 'Cafe breakfast', 'Short walk', 'Route help'],
+    imageAlt: 'Short basecamp reset experience',
+    inclusions: ['Stay included', 'Cafe breakfast', 'Short walk', 'Route help'],
     itinerary: [
       {
         label: 'Day 1',
-        items: ['Arrive by afternoon', 'Cafe meal', 'Short meadow walk', 'Cabin rest'],
+        items: ['Arrive by afternoon', 'Cafe meal', 'Short meadow walk', 'Restful stay'],
       },
     ],
     comfortNotes: ['Warm bed', 'Cafe access', 'Route help'],
+    destination: 'both',
   },
   {
     id: 'escape',
     number: '02',
-    title: '48-Hour Chamba Escape',
+    title: '48-Hour Hill Escape',
     duration: '2 days',
     category: 'couple',
     idealFor: 'Relaxed immersion',
@@ -68,12 +74,12 @@ const packages: TripPackage[] = [
     shortLine: 'The complete basecamp experience with firelit dinner, forest trail, and deep cabin rest.',
     description: 'The complete basecamp experience. Firelight dinner, forest trails, and deep cabin rest.',
     image: '/images/escape.png',
-    imageAlt: 'Two-day Chamba basecamp package',
+    imageAlt: 'Two-day basecamp package',
     inclusions: ['Cabin stay', 'Breakfast', 'Guided trail', 'Dinner'],
     itinerary: [
       {
         label: 'Day 1',
-        items: ['Arrive and settle into the cabin', 'Cafe dinner', 'Firelit evening'],
+        items: ['Arrive and settle in', 'Cafe dinner', 'Firelit evening'],
       },
       {
         label: 'Day 2',
@@ -81,6 +87,7 @@ const packages: TripPackage[] = [
       },
     ],
     comfortNotes: ['Warm bed', 'Food included', 'Local guide', 'WhatsApp planning'],
+    destination: 'both',
   },
   {
     id: 'workation',
@@ -102,10 +109,37 @@ const packages: TripPackage[] = [
       },
     ],
     comfortNotes: ['Quiet cabin', 'Cafe nearby', 'Wi-Fi clarity', 'Long stay support'],
+    destination: 'jibhi',
+  },
+  {
+    id: 'family-getaway',
+    number: '04',
+    title: 'Family Pine Getaway',
+    duration: '3 days',
+    category: 'friends',
+    idealFor: 'Families & groups',
+    price: '₹14,500',
+    shortLine: 'Slow-paced exploration, family meals, and guided walks through historic pine ridges.',
+    description: 'Perfect for families. Includes premium double room stay, group breakfast, route guides, and a slow-paced nature walk.',
+    image: '/images/hero.png',
+    imageAlt: 'Family vacation in Dalhousie pine hills',
+    inclusions: ['Premium Rooms', 'Group Breakfast', 'Nature Walk', 'Route Help'],
+    itinerary: [
+      {
+        label: 'Day 1',
+        items: ['Arrive and check in', 'Welcome tea', 'Sunset ridge view'],
+      },
+      {
+        label: 'Day 2',
+        items: ['Family breakfast', 'Slow guided walk in cedar groves', 'Evening campfire'],
+      },
+    ],
+    comfortNotes: ['Warm rooms', 'Family friendly', 'Host guided', 'Local kitchen'],
+    destination: 'dalhousie',
   },
   {
     id: 'trail-weekend',
-    number: '04',
+    number: '05',
     title: 'Trail Weekend',
     duration: '2 days',
     category: 'adventure',
@@ -114,7 +148,7 @@ const packages: TripPackage[] = [
     shortLine: 'Adventure-first days with local experts and a warm meal waiting at basecamp.',
     description: 'Adventure-first. High-altitude trekking with local experts. Return to a warm meal and bed.',
     image: '/images/trail_weekend.png',
-    imageAlt: 'Guided trail weekend in Chamba hills',
+    imageAlt: 'Guided trail weekend in the hills',
     inclusions: ['Guided trail', 'Cabin stay', 'Meals', 'Safety briefing'],
     itinerary: [
       {
@@ -127,23 +161,36 @@ const packages: TripPackage[] = [
       },
     ],
     comfortNotes: ['Local guide', 'Meals', 'Route help', 'Warm bed'],
+    destination: 'both',
   },
 ]
 
 function dynamicCtaLabel(pkg: TripPackage) {
   if (pkg.id === 'workation') return 'Plan my workation'
   if (pkg.id === 'trail-weekend') return 'Plan this trail weekend'
-  return 'Plan this escape'
+  if (pkg.id === 'family-getaway') return 'Plan this family getaway'
+  return 'Plan this package'
 }
 
-export default function ChooseYourTrip() {
+export default function ChooseYourTrip({ selectedDestination }: ChooseYourTripProps) {
   const [activeMood, setActiveMood] = useState<MoodKey>('all')
   const [selectedPackageId, setSelectedPackageId] = useState<string>('escape')
 
+  // Filter packages on destination and active mood
   const filteredPackages = useMemo(() => {
-    if (activeMood === 'all') return packages
-    return packages.filter((pkg) => pkg.category === activeMood || (activeMood === 'friends' && pkg.id !== 'workation'))
-  }, [activeMood])
+    // 1. Filter by destination first
+    const destPackages = packages.filter(
+      (pkg) => pkg.destination === 'both' || pkg.destination === selectedDestination
+    )
+
+    // 2. Filter by mood category
+    if (activeMood === 'all') return destPackages
+    
+    // Custom filter mapping for friends/workation safety checks
+    return destPackages.filter(
+      (pkg) => pkg.category === activeMood || (activeMood === 'friends' && pkg.id !== 'workation')
+    )
+  }, [activeMood, selectedDestination])
 
   useEffect(() => {
     if (filteredPackages.length === 0) return
@@ -156,6 +203,21 @@ export default function ChooseYourTrip() {
   const selectedPackage =
     filteredPackages.find((pkg) => pkg.id === selectedPackageId) ?? filteredPackages[0] ?? packages[1]
 
+  // Filter visible tabs: if selectedDestination is Dalhousie, hide the "workation" tab since there are no Dalhousie workation packages
+  const visibleMoodFilters = useMemo(() => {
+    if (selectedDestination === 'dalhousie') {
+      return moodFilters.filter((filter) => filter.key !== 'workation')
+    }
+    return moodFilters
+  }, [selectedDestination])
+
+  // Reset mood filter to 'all' if the selected tab becomes hidden
+  useEffect(() => {
+    if (selectedDestination === 'dalhousie' && activeMood === 'workation') {
+      setActiveMood('all')
+    }
+  }, [selectedDestination, activeMood])
+
   return (
     <section className="relative overflow-hidden bg-[#F4EFE4] pb-[160px] pt-[140px]">
       <div className="mx-auto w-full max-w-[1320px] px-[clamp(24px,5vw,72px)]">
@@ -166,17 +228,19 @@ export default function ChooseYourTrip() {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.22em] text-[#C9782D]">CHOOSE YOUR TRIP</p>
+            <p className="mb-4 text-[12px] font-semibold uppercase tracking-[0.22em] text-[#C9782D]">
+              CHOOSE YOUR {selectedDestination === 'jibhi' ? 'JIBHI' : 'DALHOUSIE'} TRIP
+            </p>
             <h2 className="max-w-[720px] font-serif text-[clamp(48px,5vw,76px)] leading-[0.95] tracking-[-0.045em] text-[#17251F]">
               Move from browsing to decision.
             </h2>
             <p className="mt-6 max-w-[720px] text-[17px] leading-[1.6] text-[#6D716B]">
-              Selected experiences that combine the best of the table, the cabin, and the trail.
+              Selected experiences that combine the best of the table, the cabin, and the trail in {selectedDestination === 'jibhi' ? 'Jibhi' : 'Dalhousie'}.
             </p>
           </motion.div>
 
           <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 lg:mx-0 lg:overflow-visible lg:px-0" role="tablist" aria-label="Choose by mood">
-            {moodFilters.map((filter) => {
+            {visibleMoodFilters.map((filter) => {
               const isActive = activeMood === filter.key
               return (
                 <button

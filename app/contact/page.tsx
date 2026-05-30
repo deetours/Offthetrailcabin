@@ -97,7 +97,7 @@ export default function ContactPage() {
           <div className="mx-auto max-w-6xl px-6">
             <h1 className="mb-4 text-5xl font-serif text-primary md:text-6xl">Plan With a Real Host</h1>
             <p className="max-w-2xl text-xl text-text-muted">
-              Share your dates and we will help you choose the right stay, meal, and trail plan for Chamba.
+              Share your dates and we will help you choose the right stay, meal, and trail plan for your destination.
             </p>
           </div>
         </section>

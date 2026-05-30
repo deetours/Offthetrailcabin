@@ -92,7 +92,7 @@ export default function BasecampPromise() {
               Just food, rest, and local guidance in one place.
             </h3>
             <p className="text-surface/60 font-sans font-light text-lg max-w-xl mx-auto">
-              Built for travelers who want Chamba to feel simple again: a warm meal, a clean bed, and someone local to point them toward the right trail.
+              Built for travelers who want the hills to feel simple again: a warm meal, a clean bed, and someone local to point them toward the right trail.
             </p>
           </div>
         </div>
